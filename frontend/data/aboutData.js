@@ -58,7 +58,7 @@ export const BRANCHES = [
 ];
 
 // ── Careers (PLACEHOLDER jobs: apni real openings se replace karna) ──
-export const APPLY_EMAIL = "info@iilstudyabroad.com";
+export const APPLY_EMAIL = "Contact@iilstudyabroad.com";
 
 export const JOBS = [
   {
