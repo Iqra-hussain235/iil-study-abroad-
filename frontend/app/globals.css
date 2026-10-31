@@ -50,6 +50,51 @@ body {
   .animate-plane {
     animation: planeFly 8s linear infinite;
   }
+
+  /* Animated Strike / Streak Line Utilities */
+  .strike-line-beam {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .strike-line-beam::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, #ff2f56, #0f4c81, transparent);
+    animation: streakGlow 2.6s infinite linear;
+  }
+
+  .card-strike-hover {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-strike-hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ff2f56, #0f4c81);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease-out;
+  }
+
+  .card-strike-hover:hover::before {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes streakGlow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes logoZoom {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import ServiceCategoryCards from "@/components/ServiceCategoryCards";
+import AnimatedStrikeLine from "@/components/AnimatedStrikeLine";
 import { MAIN_SERVICE_CATEGORIES } from "@/data/servicesData";
 
 export default function ServicesSection({
@@ -48,13 +49,19 @@ export default function ServicesSection({
               ? { whileInView: { opacity: 1, y: 0 }, viewport: { once: true } }
               : { animate: { opacity: 1, y: 0 } })}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-5 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl"
+            className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl"
           >
-            Leading & Reliable{" "}
+            Leading &amp; Reliable{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0F4C81] to-[#ff2f56]">
               Immigration Experts
             </span>
           </motion.h2>
+
+          {/* Animated Strike Line */}
+          <div className="my-4">
+            <AnimatedStrikeLine align="center" width="w-48 sm:w-64" />
+          </div>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             {...(animateOnView
