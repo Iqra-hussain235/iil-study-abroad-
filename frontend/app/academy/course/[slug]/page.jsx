@@ -26,8 +26,6 @@ const OPTIONS = {
 export default function CourseDetail() {
   const router = useRouter();
   const params = useParams();
-  // `useParams` can temporarily be empty during prerendering/hydration. A
-  // catch-all param could also be an array, so only use a string slug.
   const courseSlug = typeof params?.slug === "string" ? params.slug : "";
   const courseName = courseSlug
     ? courseSlug.charAt(0).toUpperCase() + courseSlug.slice(1)
@@ -59,14 +57,12 @@ export default function CourseDetail() {
   };
 
   const nextStep = () => {
-    setErrorMsg("");
     if (currentStep < STEPS.length - 1) {
       setCurrentStep((prev) => prev + 1);
     }
   };
 
   const prevStep = () => {
-    setErrorMsg("");
     if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
     }
@@ -97,7 +93,6 @@ export default function CourseDetail() {
     }
   };
 
-  // Variants for animation
   const slideVariants = {
     hidden: { opacity: 0, x: 50 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
@@ -105,55 +100,55 @@ export default function CourseDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white flex flex-col items-center py-16 px-4 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col items-center py-16 px-4 font-sans relative overflow-hidden">
       
-      {/* Background Glow */}
-      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-red-600 rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-600 rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
+      {/* Background Pastel Blobs */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-100 rounded-full blur-[150px] opacity-50 pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-rose-100 rounded-full blur-[150px] opacity-40 pointer-events-none"></div>
 
       <div className="w-full max-w-3xl z-10">
         
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
-          <Link href="/academy/course" className="text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
+          <Link href="/academy/course" className="text-slate-600 hover:text-slate-900 flex items-center gap-2 transition-colors font-medium">
             <FaArrowLeft /> Back to Courses
           </Link>
           <div className="text-right">
-            <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">
               {courseName} Enrollment
             </h1>
-            <p className="text-sm text-slate-400 uppercase tracking-widest mt-1">Configure your journey</p>
+            <p className="text-xs text-slate-500 uppercase tracking-widest mt-1 font-semibold">Configure your journey</p>
           </div>
         </div>
 
         {/* Progress Bar */}
         {!isSuccess && (
           <div className="mb-10 relative">
-            <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-800 -translate-y-1/2 rounded-full"></div>
+            <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-200 -translate-y-1/2 rounded-full"></div>
             <div 
-              className="absolute top-1/2 left-0 h-1 bg-red-500 -translate-y-1/2 rounded-full transition-all duration-500 shadow-[0_0_10px_#ef4444]"
+              className="absolute top-1/2 left-0 h-1 bg-[#0F4C81] -translate-y-1/2 rounded-full transition-all duration-500"
               style={{ width: `${(currentStep / (STEPS.length - 1)) * 100}%` }}
             ></div>
             <div className="relative flex justify-between">
               {STEPS.map((step, idx) => (
                 <div 
                   key={step.id} 
-                  className={`w-10 h-10 rounded-full flex items-center justify-center border-4 border-[#0f172a] transition-all duration-300 ${
-                    idx <= currentStep ? "bg-red-500 text-white shadow-[0_0_15px_#ef4444]" : "bg-slate-800 text-slate-500"
+                  className={`w-10 h-10 rounded-full flex items-center justify-center border-4 border-slate-50 transition-all duration-300 ${
+                    idx <= currentStep ? "bg-[#0F4C81] text-white shadow-md" : "bg-slate-200 text-slate-500"
                   }`}
                 >
                   {step.icon}
                 </div>
               ))}
             </div>
-            <div className="text-center mt-6 text-xl font-semibold text-slate-200">
+            <div className="text-center mt-6 text-xl font-bold text-slate-900">
               {STEPS[currentStep].title}
             </div>
           </div>
         )}
 
         {/* Main Content Area */}
-        <div className="bg-[#1e293b] rounded-2xl shadow-2xl p-8 md:p-12 border border-slate-700/50 min-h-[400px] flex flex-col justify-center relative">
+        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-slate-200 min-h-[400px] flex flex-col justify-center relative">
           
           <AnimatePresence mode="wait">
             
@@ -168,17 +163,17 @@ export default function CourseDetail() {
                   initial={{ rotate: -90 }}
                   animate={{ rotate: 0 }}
                   transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                  className="inline-block text-green-500 text-7xl drop-shadow-[0_0_20px_rgba(34,197,94,0.5)]"
+                  className="inline-block text-emerald-600 text-7xl"
                 >
                   <FaCheckCircle />
                 </motion.div>
-                <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-600">
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
                   Enquiry Submitted!
                 </h2>
-                <p className="text-slate-300 text-lg">
+                <p className="text-slate-600 text-lg">
                   Thank you for your interest in {courseName}. Our advisors will contact you shortly.
                 </p>
-                <p className="text-sm text-slate-500">Redirecting to courses...</p>
+                <p className="text-sm text-slate-400">Redirecting to courses...</p>
               </motion.div>
             ) : currentStep < 4 ? (
               
@@ -194,7 +189,7 @@ export default function CourseDetail() {
                   <button
                     key={opt}
                     onClick={() => handleSelect(STEPS[currentStep].id, opt)}
-                    className="p-6 rounded-xl border border-slate-600 bg-slate-800/50 hover:bg-slate-700/80 hover:border-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all flex items-center justify-center text-lg font-medium tracking-wide"
+                    className="p-6 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-[#0F4C81] hover:text-[#0F4C81] shadow-sm transition-all flex items-center justify-center text-lg font-bold text-slate-800"
                   >
                     {opt}
                   </button>
@@ -211,37 +206,37 @@ export default function CourseDetail() {
                 exit="exit"
                 className="w-full max-w-md mx-auto"
               >
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-400 mb-1">Full Name</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1">Full Name</label>
                     <input 
                       type="text" name="name" 
                       value={formData.name} onChange={handleChange}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
-                      placeholder="John Doe"
+                      className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 transition-colors"
+                      placeholder="Your full name"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-400 mb-1">Email Address (Optional)</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1">Email Address (Optional)</label>
                     <input 
                       type="email" name="email" 
                       value={formData.email} onChange={handleChange}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
-                      placeholder="john@example.com"
+                      className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 transition-colors"
+                      placeholder="you@example.com"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-400 mb-1">Phone Number</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1">Phone Number</label>
                     <input 
                       type="tel" name="phone" 
                       value={formData.phone} onChange={handleChange}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
-                      placeholder="+1 234 567 8900"
+                      className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 transition-colors"
+                      placeholder="+91 XXXXX XXXXX"
                     />
                   </div>
                   
                   {errorMsg && (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 text-sm text-center">
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-500 text-sm text-center">
                       {errorMsg}
                     </motion.div>
                   )}
@@ -249,7 +244,7 @@ export default function CourseDetail() {
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-500 hover:to-orange-400 text-white font-bold py-4 rounded-lg shadow-[0_4px_20px_rgba(239,68,68,0.4)] hover:shadow-[0_4px_25px_rgba(239,68,68,0.6)] transition-all disabled:opacity-50 mt-4"
+                    className="w-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] text-white font-bold py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 mt-4"
                   >
                     {isSubmitting ? "Submitting..." : "Complete Enquiry"}
                   </button>
@@ -265,7 +260,7 @@ export default function CourseDetail() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               onClick={prevStep}
-              className="absolute bottom-6 left-8 text-slate-400 hover:text-white flex items-center gap-2 transition-colors uppercase text-sm tracking-wider font-semibold"
+              className="absolute bottom-6 left-8 text-slate-500 hover:text-slate-900 flex items-center gap-2 transition-colors uppercase text-xs tracking-wider font-bold"
             >
               &larr; Back
             </motion.button>

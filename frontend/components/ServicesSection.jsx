@@ -17,38 +17,41 @@ export default function ServicesSection({
   return (
     <section
       id={id}
-      className={`relative scroll-mt-10 overflow-hidden py-20 sm:py-24 bg-[#0a0f1c] text-white ${className}`}
+      className={`relative scroll-mt-10 overflow-hidden py-20 sm:py-24 bg-slate-50/70 text-slate-900 border-t border-b border-slate-100 ${className}`}
     >
       {/* Background aesthetics */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute left-[5%] top-[8%] h-[35%] w-[35%] rounded-full bg-blue-600/8 blur-[120px]" />
-        <div className="absolute bottom-[10%] right-[5%] h-[40%] w-[40%] rounded-full bg-[#ff2f56]/5 blur-[120px]" />
-        <div className="absolute left-[40%] top-[50%] h-[25%] w-[25%] rounded-full bg-[#0F4C81]/10 blur-[100px]" />
+        <div className="absolute left-[5%] top-[8%] h-[35%] w-[35%] rounded-full bg-blue-100/40 blur-[120px]" />
+        <div className="absolute bottom-[10%] right-[5%] h-[40%] w-[40%] rounded-full bg-rose-100/30 blur-[120px]" />
+        <div className="absolute left-[40%] top-[50%] h-[25%] w-[25%] rounded-full bg-sky-100/40 blur-[100px]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-16">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             {...(animateOnView
               ? { whileInView: { opacity: 1, y: 0 }, viewport: { once: true } }
               : { animate: { opacity: 1, y: 0 } })}
             transition={{ duration: 0.5 }}
-            className="mb-3 text-sm font-bold uppercase tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400"
+            className="mb-3 inline-block"
           >
-            Our Expertise
-          </motion.p>
+            <span className="rounded-full bg-blue-100/80 border border-blue-200/80 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-[#0F4C81]">
+              Our Expertise
+            </span>
+          </motion.div>
+          
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             {...(animateOnView
               ? { whileInView: { opacity: 1, y: 0 }, viewport: { once: true } }
               : { animate: { opacity: 1, y: 0 } })}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-5 text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl"
+            className="mb-5 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl"
           >
             Leading & Reliable{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0F4C81] to-[#ff2f56]">
               Immigration Experts
             </span>
           </motion.h2>
@@ -58,7 +61,7 @@ export default function ServicesSection({
               ? { whileInView: { opacity: 1, y: 0 }, viewport: { once: true } }
               : { animate: { opacity: 1, y: 0 } })}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base leading-relaxed text-slate-400 md:text-lg"
+            className="text-base leading-relaxed text-slate-600 md:text-lg"
           >
             Professional coaching, visa support, and comprehensive language training
             built to ensure your global journey starts flawlessly.
@@ -85,13 +88,13 @@ export default function ServicesSection({
           >
             <Link
               href="/services"
-              className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-3.5 text-base font-semibold text-white backdrop-blur-md transition-all hover:border-white/30 hover:bg-white/20"
+              className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-8 py-3.5 text-base font-semibold text-slate-800 shadow-sm transition-all hover:bg-slate-50 hover:border-slate-400 hover:shadow-md"
             >
               View All Services
             </Link>
             <Link
               href="/enquiry"
-              className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] px-8 py-3.5 text-base font-semibold text-white shadow-[0_0_30px_rgba(255,47,86,0.25)] transition-all hover:shadow-[0_0_40px_rgba(255,47,86,0.4)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] px-8 py-3.5 text-base font-semibold text-white shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:-translate-y-0.5"
             >
               Start Your Enquiry
             </Link>

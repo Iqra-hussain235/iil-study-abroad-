@@ -109,7 +109,7 @@ function Footer() {
 
   return (
     <>
-      <footer className="relative overflow-hidden bg-[#020617] text-slate-300">
+      <footer className="relative overflow-hidden bg-slate-900 text-slate-300 border-t border-slate-800">
         <img
           src="/15_footer_background.png"
           alt=""
@@ -222,7 +222,7 @@ function Footer() {
                 </li>
                 <li className="flex items-center gap-3">
                   <FiMail className="shrink-0 text-blue-400" />
-                  <span>info@iilstudyabroad.com</span>
+                  <span>Contact@iilstudyabroad.com</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <FiClock className="shrink-0 text-blue-400" />

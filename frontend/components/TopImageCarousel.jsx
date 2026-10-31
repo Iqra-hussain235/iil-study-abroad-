@@ -60,7 +60,7 @@ export default function TopImageCarousel() {
             setActiveIndex(swiper.realIndex);
           }}
           style={{
-            "--swiper-navigation-color": "rgba(255, 255, 255, 0.9)",
+            "--swiper-navigation-color": "#0f172a",
             "--swiper-navigation-size": "20px",
           }}
           className="top-carousel !py-6"
@@ -74,21 +74,19 @@ export default function TopImageCarousel() {
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   className="relative mx-auto w-full max-w-[300px]"
                 >
-                  {/* Glow */}
+                  {/* Subtle ambient light shadow */}
                   <div
-                    className="absolute -inset-2 rounded-[1.8rem] bg-gradient-to-tr from-blue-500/50 via-cyan-400/40 to-indigo-500/50 blur-2xl transition-opacity duration-700"
-                    style={{ opacity: isActive ? 0.9 : 0.15 }}
+                    className="absolute -inset-2 rounded-[1.8rem] bg-gradient-to-tr from-blue-200/50 via-sky-200/40 to-indigo-200/50 blur-xl transition-opacity duration-700"
+                    style={{ opacity: isActive ? 0.8 : 0.15 }}
                   />
 
                   <div
-                    className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem] border-2 bg-slate-900 transition-all duration-700"
+                    className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem] border-2 bg-white transition-all duration-700 shadow-md"
                     style={{
-                      borderColor: isActive
-                        ? "rgba(96,165,250,0.7)"
-                        : "rgba(255,255,255,0.08)",
+                      borderColor: isActive ? "#0F4C81" : "#e2e8f0",
                       boxShadow: isActive
-                        ? "0 0 35px rgba(59,130,246,0.55), 0 15px 40px rgba(0,0,0,0.5)"
-                        : "0 10px 30px rgba(0,0,0,0.4)",
+                        ? "0 14px 30px -8px rgba(15,76,129,0.25)"
+                        : "0 4px 14px rgba(0,0,0,0.06)",
                     }}
                   >
                     <img
@@ -97,8 +95,7 @@ export default function TopImageCarousel() {
                       className="h-full w-full object-cover object-center"
                       draggable={false}
                     />
-                    {/* subtle inner vignette for polish */}
-                    <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] ring-1 ring-inset ring-white/10" />
+                    <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] ring-1 ring-inset ring-slate-900/5" />
                   </div>
                 </motion.div>
               </SwiperSlide>
@@ -112,7 +109,7 @@ export default function TopImageCarousel() {
             <button
               key={i}
               onClick={() => goTo(i)}
-              className="relative h-1 flex-1 overflow-hidden rounded-full bg-white/15"
+              className="relative h-1 flex-1 overflow-hidden rounded-full bg-slate-200"
               aria-label={`Go to slide ${i + 1}`}
             >
               {i === activeIndex && (
@@ -121,11 +118,11 @@ export default function TopImageCarousel() {
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: AUTOPLAY_DELAY / 1000, ease: "linear" }}
-                  className="absolute inset-y-0 left-0 rounded-full bg-blue-400"
+                  className="absolute inset-y-0 left-0 rounded-full bg-[#0F4C81]"
                 />
               )}
               {i < activeIndex && (
-                <div className="absolute inset-0 rounded-full bg-blue-400" />
+                <div className="absolute inset-0 rounded-full bg-[#0F4C81]" />
               )}
             </button>
           ))}

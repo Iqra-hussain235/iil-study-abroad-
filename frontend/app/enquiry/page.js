@@ -61,30 +61,30 @@ function EnquiryForm() {
 
   const handleCourseToggle = (course) => {
     setSelectedCourses((prev) => {
-      if (prev.includes(course)) {
-        return prev.filter((item) => item !== course);
-      }
-      return [...prev, course];
+      const next = prev.includes(course)
+        ? prev.filter((item) => item !== course)
+        : [...prev, course];
+      return next;
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setFeedback("");
+    setLoading(true);
 
     const resolvedCourses = hasServiceParams
-      ? [prefillCourse]
-      : selectedCourses.filter(Boolean);
+      ? [form.course]
+      : selectedCourses;
 
-    if (!resolvedCourses.length) {
-      setFeedback("Please select at least one course interest.");
+    if (!hasServiceParams && resolvedCourses.length === 0) {
+      setFeedback("Please select at least one course.");
       setLoading(false);
       return;
     }
 
     try {
-      const response = await axios.post("/api/contact", {
+      const response = await axios.post("/api/enquiry", {
         name: form.name,
         email: form.email,
         phone: form.phone,
@@ -112,7 +112,7 @@ function EnquiryForm() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-slate-50 text-slate-900">
       <div className="relative mx-auto flex max-w-7xl flex-col gap-10 px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         {/* Success toast */}
         <AnimatePresence>
@@ -121,27 +121,27 @@ function EnquiryForm() {
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10 }}
-              className="fixed left-1/2 top-24 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl border border-green-500/30 bg-green-950/90 px-5 py-4 shadow-2xl backdrop-blur-xl"
+              className="fixed left-1/2 top-24 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl border border-emerald-500/30 bg-emerald-50 px-5 py-4 shadow-2xl backdrop-blur-xl"
               role="alert"
             >
-              <p className="text-center text-sm font-semibold text-green-300 sm:text-base">
-                Enquiry submitted successfully! Redirecting to courses...
+              <p className="text-center text-sm font-semibold text-emerald-800 sm:text-base">
+                Enquiry submitted successfully! Redirecting...
               </p>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-slate-950/30 backdrop-blur-xl sm:rounded-[40px] sm:p-8">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl sm:rounded-[36px] sm:p-10">
           <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <p className="inline-flex rounded-full border border-blue-500/20 bg-blue-600/10 px-4 py-2 text-xs uppercase tracking-[0.25em] text-blue-300 sm:text-sm sm:tracking-[0.3em]">
+              <span className="inline-block rounded-full bg-blue-100/80 border border-blue-200/80 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-[#0F4C81]">
                 Start Your Journey
-              </p>
-              <h1 className="mt-5 text-3xl font-bold tracking-tight text-white sm:mt-6 sm:text-4xl lg:text-5xl">
+              </span>
+              <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
                 {hasServiceParams ? (
                   <>
                     Enquire About{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0F4C81] to-[#ff2f56]">
                       {displayTitle}
                     </span>
                   </>
@@ -149,19 +149,18 @@ function EnquiryForm() {
                   "Ready to take the next step?"
                 )}
               </h1>
-              <p className="mt-4 max-w-2xl text-sm text-slate-300 sm:text-base">
-                Submit your details below. Our team will contact you shortly and you&apos;ll be
-                redirected to explore courses.
+              <p className="mt-4 max-w-2xl text-base text-slate-600 leading-relaxed">
+                Submit your details below. Our expert team will contact you shortly and guide you with complete admissions, coaching, and visa procedures.
               </p>
               {categoryParam && (
-                <p className="mt-2 text-sm text-slate-400">{categoryParam}</p>
+                <p className="mt-2 text-sm text-slate-500 font-medium">{categoryParam}</p>
               )}
             </div>
 
-            <div className="rounded-[28px] border border-white/10 bg-slate-900/80 p-5 shadow-[0_30px_90px_-40px_rgba(15,76,129,0.5)] sm:rounded-[32px] sm:p-6">
+            <div className="rounded-3xl border border-slate-200 bg-slate-50/80 p-6 shadow-md sm:p-8">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                  <label className="mb-1 block text-sm font-semibold text-slate-700">
                     Full Name *
                   </label>
                   <input
@@ -169,27 +168,27 @@ function EnquiryForm() {
                     value={form.name}
                     onChange={handleChange("name")}
                     disabled={success}
-                    className="w-full rounded-3xl border border-white/10 bg-slate-950/90 px-4 py-3 text-white outline-none transition focus:border-blue-400 disabled:opacity-60"
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 disabled:opacity-60"
                     placeholder="Your name"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                  <label className="mb-1 block text-sm font-semibold text-slate-700">
                     Email Address (Optional)
                   </label>
                   <input
                     value={form.email}
                     onChange={handleChange("email")}
                     disabled={success}
-                    className="w-full rounded-3xl border border-white/10 bg-slate-950/90 px-4 py-3 text-white outline-none transition focus:border-blue-400 disabled:opacity-60"
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 disabled:opacity-60"
                     placeholder="you@example.com"
                     type="email"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                  <label className="mb-1 block text-sm font-semibold text-slate-700">
                     Phone Number *
                   </label>
                   <input
@@ -197,13 +196,13 @@ function EnquiryForm() {
                     value={form.phone}
                     onChange={handleChange("phone")}
                     disabled={success}
-                    className="w-full rounded-3xl border border-white/10 bg-slate-950/90 px-4 py-3 text-white outline-none transition focus:border-blue-400 disabled:opacity-60"
+                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 disabled:opacity-60"
                     placeholder="+91 90000 00000"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-slate-200">
+                  <label className="mb-1 block text-sm font-semibold text-slate-700">
                     Course Interest {hasServiceParams ? "" : "(Select one or more)"}
                   </label>
                   {hasServiceParams ? (
@@ -211,7 +210,7 @@ function EnquiryForm() {
                       type="text"
                       value={form.course}
                       readOnly
-                      className="w-full cursor-default rounded-3xl border border-white/10 bg-slate-800/80 px-4 py-3 text-slate-200 outline-none"
+                      className="w-full cursor-default rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 font-medium outline-none"
                     />
                   ) : (
                     <div className="grid gap-2 sm:grid-cols-2">
@@ -220,10 +219,10 @@ function EnquiryForm() {
                         return (
                           <label
                             key={course}
-                            className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-3 py-2 text-sm transition ${
+                            className={`flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-2 text-sm transition ${
                               isChecked
-                                ? "border-blue-500/50 bg-blue-600/10 text-blue-200"
-                                : "border-white/10 bg-slate-950/70 text-slate-200"
+                                ? "border-[#0F4C81] bg-blue-50 text-[#0F4C81] font-semibold"
+                                : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
                             }`}
                           >
                             <input
@@ -231,7 +230,7 @@ function EnquiryForm() {
                               checked={isChecked}
                               onChange={() => handleCourseToggle(course)}
                               disabled={success}
-                              className="h-4 w-4 rounded border-white/20 bg-transparent text-blue-500 focus:ring-blue-400"
+                              className="h-4 w-4 rounded border-slate-300 text-[#0F4C81] focus:ring-[#0F4C81]"
                             />
                             <span>{course}</span>
                           </label>
@@ -244,7 +243,7 @@ function EnquiryForm() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full rounded-3xl border bg-blue-600 px-5 py-3.5 text-base font-semibold text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] transition hover:bg-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="w-full rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] px-5 py-3.5 text-base font-semibold text-white shadow-md transition hover:opacity-95 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
                     disabled={loading || success || !form.name || !form.phone || (!hasServiceParams && selectedCourses.length === 0)}
                   >
                     {loading
@@ -256,46 +255,45 @@ function EnquiryForm() {
                 </div>
 
                 {feedback && (
-                  <p className="mt-2 text-center text-sm text-red-400">{feedback}</p>
+                  <p className="mt-2 text-center text-sm font-medium text-red-500">{feedback}</p>
                 )}
               </form>
             </div>
           </div>
         </div>
 
-        <div className="rounded-[28px] border border-white/10 bg-blue-950/80 p-6 shadow-xl shadow-slate-950/40 sm:rounded-[32px] sm:p-8">
-          <h2 className="text-xl font-semibold text-white sm:text-2xl">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl sm:rounded-[36px] sm:p-8">
+          <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">
             Why International Institute Of Language?
           </h2>
-          <ul className="mt-5 space-y-4 text-sm text-slate-200 sm:mt-6 sm:text-base">
+          <ul className="mt-5 space-y-4 text-sm text-slate-700 sm:mt-6 sm:text-base">
             <li className="flex gap-3">
-              <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600/20 text-sm text-blue-300">
+              <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-bold text-[#0F4C81]">
                 1
               </span>
               Personalized course guidance for immigration, IELTS, PTE, and spoken English.
             </li>
             <li className="flex gap-3">
-              <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600/20 text-sm text-blue-300">
+              <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-bold text-[#0F4C81]">
                 2
               </span>
               Instant access to our extensive course catalogue right after your enquiry.
             </li>
             <li className="flex gap-3">
-              <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600/20 text-sm text-blue-300">
+              <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-bold text-[#0F4C81]">
                 3
               </span>
               Our expert team will follow up quickly to answer any of your questions.
             </li>
           </ul>
-          <div className="mt-6 rounded-3xl bg-white/5 p-5 text-slate-300 sm:mt-8 sm:p-6">
-            <h3 className="font-semibold text-white">Need a different connection?</h3>
+          <div className="mt-6 rounded-2xl bg-slate-50 p-5 text-slate-600 sm:mt-8 sm:p-6 border border-slate-200">
+            <h3 className="font-bold text-slate-900">Need a different connection?</h3>
             <p className="mt-2 text-sm leading-relaxed">
-              If you prefer communicating over direct chat or call, please reach out to us at our
-              main contact portal.
+              If you prefer communicating over direct chat or call, please reach out to us at our main contact portal.
             </p>
             <Link
               href="/contact"
-              className="mt-4 inline-flex rounded-full border border-white/20 bg-white/10 px-6 py-2 text-sm text-white transition hover:bg-white/20"
+              className="mt-4 inline-flex rounded-full border border-slate-300 bg-white px-6 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:border-slate-400"
             >
               Contact Support
             </Link>
@@ -309,10 +307,9 @@ function EnquiryForm() {
 export default function Enquiry() {
   return (
     <>
-      <Navbar />
       <Suspense
         fallback={
-          <div className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-400">
+          <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-500">
             Loading enquiry form...
           </div>
         }

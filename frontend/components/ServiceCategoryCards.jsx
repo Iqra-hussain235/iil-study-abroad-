@@ -59,19 +59,19 @@ export default function ServiceCategoryCards({
               type="button"
               layout
               variants={cardVariant}
-              whileHover={!isSelected ? { y: -8, scale: 1.02 } : {}}
+              whileHover={!isSelected ? { y: -6, scale: 1.02 } : {}}
               whileTap={{ scale: 0.98 }}
               onClick={() => onSelect(isSelected ? null : category.id)}
               aria-expanded={isSelected}
-              className={`group relative block w-full overflow-hidden rounded-3xl text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0f1c] ${
+              className={`group relative block w-full overflow-hidden rounded-3xl text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F4C81] focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                 isSelected
-                  ? "ring-2 ring-white/40 shadow-[0_24px_70px_-12px_var(--card-glow)]"
-                  : "ring-1 ring-white/10 hover:ring-white/20 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_50px_-12px_var(--card-glow)]"
+                  ? "ring-2 ring-[#0F4C81] shadow-2xl shadow-blue-900/15"
+                  : "ring-1 ring-slate-200 hover:ring-blue-300 shadow-md hover:shadow-xl bg-white"
               }`}
               style={{ "--card-glow": category.glow }}
             >
               {/* Full illustration — title, description, and "click to explore" are already part of the image */}
-              <div className="relative w-full bg-[#0d1326]">
+              <div className="relative w-full bg-slate-900">
                 <img
                   src={IMAGES[category.icon] || IMAGES.graduation}
                   alt={category.title}
@@ -83,7 +83,7 @@ export default function ServiceCategoryCards({
               <motion.span
                 animate={{ rotate: isSelected ? 180 : 0 }}
                 transition={{ duration: 0.35 }}
-                className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-black/40 text-white backdrop-blur-md"
+                className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-md shadow-sm"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -91,9 +91,9 @@ export default function ServiceCategoryCards({
               </motion.span>
 
               <div
-                className="absolute bottom-0 left-0 right-0 h-1 transition-opacity"
+                className="absolute bottom-0 left-0 right-0 h-1.5 transition-opacity"
                 style={{
-                  opacity: isSelected ? 1 : 0.6,
+                  opacity: isSelected ? 1 : 0.7,
                   background: `linear-gradient(90deg, transparent, ${category.accent}, transparent)`,
                 }}
               />

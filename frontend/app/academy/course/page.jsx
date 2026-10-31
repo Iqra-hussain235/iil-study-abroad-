@@ -73,7 +73,7 @@ const CATEGORIES = [
         ]
       },
       {
-        id: "dl", name: "DL", icon: <FaFileSignature className="text-4xl" />,
+        id: "dl", name: "Duolingo", icon: <FaFileSignature className="text-4xl" />,
         flow: [
           { id: "mode", title: "Select Mode", type: "single", options: ["Online", "Offline"] },
           { id: "modules", title: "Select Modules", type: "multiple", options: ["Reading", "Writing", "Listening", "Speaking"] }
@@ -99,25 +99,16 @@ const CATEGORIES = [
         ]
       },
       {
-        id: "tesol-tefl", name: "TESOL / TEFL", icon: <FaGraduationCap className="text-4xl" />,
+        id: "interview", name: "Interview Preparation", icon: <FaComments className="text-4xl" />,
         flow: [
           { id: "mode", title: "Select Mode", type: "single", options: ["Online", "Offline"] },
-          { id: "type", title: "Select Type", type: "single", options: ["Training Only", "Training + Job"] }
-        ]
-      },
-      {
-        id: "interview-prep", name: "Interview Preparation", icon: <FaComments className="text-4xl" />,
-        flow: [
-          { id: "purpose", title: "Select Purpose", type: "multiple", options: ["Government Job", "MNC", "Visa", "Immigration"] }
+          { id: "category", title: "Select Track", type: "single", options: ["Job Interview", "Visa Interview", "Corporate Presentation"] }
         ]
       }
     ]
   }
 ];
 
-// ------------------------------
-// COMPONENT
-// ------------------------------
 function CourseSelectionContent() {
   const searchParams = useSearchParams();
   const serviceParam = searchParams.get("service");
@@ -166,7 +157,7 @@ function CourseSelectionContent() {
 
   const isCurrentStepValid = () => {
     if (currentStep < 0 || !selectedCourse) return true;
-    if (currentStep >= selectedCourse.flow.length) return true; // At form stage
+    if (currentStep >= selectedCourse.flow.length) return true;
     
     const currentValidationId = selectedCourse.flow[currentStep].id;
     const selectedData = selections[currentValidationId];
@@ -202,13 +193,11 @@ function CourseSelectionContent() {
     setErrorMsg("");
 
     try {
-      // Merge selected steps into the payload
       const payload = {
         course: selectedCourse.name,
         ...selections,
         ...formData
       };
-      // Format multiple selections as comma-separated strings for existing backend models if needed
       for (const key in payload) {
         if (Array.isArray(payload[key])) {
           payload[key] = payload[key].join(", ");
@@ -226,9 +215,6 @@ function CourseSelectionContent() {
     }
   };
 
-  // ------------------------------
-  // RENDER HELPERS
-  // ------------------------------
   const slideVariants = {
     hidden: { opacity: 0, x: 40 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
@@ -241,11 +227,11 @@ function CourseSelectionContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white py-16 px-4 md:px-8 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-900 py-16 px-4 md:px-8 font-sans relative overflow-hidden">
       
-      {/* Background Glow */}
-      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-red-600 rounded-full blur-[180px] opacity-20 pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-600 rounded-full blur-[180px] opacity-20 pointer-events-none"></div>
+      {/* Background Subtle Pastels */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-100 rounded-full blur-[150px] opacity-50 pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-rose-100 rounded-full blur-[150px] opacity-40 pointer-events-none"></div>
 
       <div className="max-w-5xl mx-auto z-10 relative">
 
@@ -265,7 +251,7 @@ function CourseSelectionContent() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400"
+            className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900"
           >
             {selectedCourse ? selectedCourse.name : "Explore Our World-Class Courses"}
           </motion.h1>
@@ -273,20 +259,18 @@ function CourseSelectionContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-lg text-slate-400 max-w-2xl mx-auto mt-4"
+            className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto mt-4"
           >
             {selectedCourse 
               ? "Customize your learning experience step-by-step."
-              : "Find the perfect program to accelerate your career or broaden your horizons."}
+              : "Find the perfect program to accelerate your career or broaden your global horizons."}
           </motion.p>
         </div>
 
         <AnimatePresence mode="wait">
           {currentStep === -1 && !selectedCourse ? (
              
-            // ==========================================
             // LANDING CATEGORY & COURSE SELECTION
-            // ==========================================
             <motion.div
               key="landing"
               variants={fadeVariants}
@@ -297,24 +281,23 @@ function CourseSelectionContent() {
             >
               {CATEGORIES.map((category, catIdx) => (
                 <div key={catIdx} className="space-y-6">
-                  <h2 className="text-3xl font-bold border-l-4 border-red-500 pl-4">{category.title}</h2>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 border-l-4 border-[#0F4C81] pl-4">
+                    {category.title}
+                  </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {category.courses.map((course) => (
                       <motion.div
                         key={course.id}
-                        whileHover={{ scale: 1.05, y: -5 }}
+                        whileHover={{ scale: 1.03, y: -4 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleStartCourse(course)}
                         className="relative group cursor-pointer"
                       >
-                        {/* Animated Glow Backdrop */}
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
-          
-                        <div className="relative h-full bg-[#1e293b] p-8 rounded-2xl shadow-xl flex flex-col items-center text-center gap-4 border border-slate-700/50 hover:border-slate-500/50 transition-colors">
-                          <div className="p-4 bg-gradient-to-br from-red-500/20 to-blue-500/20 rounded-xl text-red-500">
+                        <div className="relative h-full bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl flex flex-col items-center text-center gap-4 border border-slate-200 hover:border-[#0F4C81] transition-all">
+                          <div className="p-4 bg-blue-50 rounded-xl text-[#0F4C81] transition-colors group-hover:bg-[#0F4C81] group-hover:text-white">
                             {course.icon}
                           </div>
-                          <h3 className="text-xl font-bold text-slate-100 group-hover:text-red-400 transition-colors">
+                          <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#0F4C81] transition-colors">
                             {course.name}
                           </h3>
                         </div>
@@ -327,9 +310,7 @@ function CourseSelectionContent() {
 
           ) : (
 
-            // ==========================================
             // DYNAMIC MULTI-STEP FLOW OR FINAL FORM
-            // ==========================================
             <motion.div
               key="flow"
               variants={fadeVariants}
@@ -338,29 +319,29 @@ function CourseSelectionContent() {
               exit={{ opacity: 0, y: 20 }}
               className="max-w-3xl mx-auto"
             >
-              <div className="bg-[#1e293b] rounded-2xl shadow-2xl p-6 md:p-10 border border-slate-700/50 relative min-h-[450px] flex flex-col justify-between">
+              <div className="bg-white rounded-2xl shadow-xl p-6 md:p-10 border border-slate-200 relative min-h-[450px] flex flex-col justify-between">
                 
-                {/* ---------------- Progress Indicator ---------------- */}
+                {/* Progress Indicator */}
                 {!isSuccess && selectedCourse && (
                   <div className="mb-8">
                     <div className="flex items-center justify-between mb-2">
-                       <span className="text-sm text-slate-400 font-medium">
+                       <span className="text-sm text-slate-500 font-medium">
                          Step {currentStep + 1} of {selectedCourse.flow.length + 1}
                        </span>
-                       <span className="text-sm text-red-400 font-medium">
+                       <span className="text-sm text-[#0F4C81] font-bold">
                          {currentStep < selectedCourse.flow.length ? selectedCourse.flow[currentStep].title : "Final Details"}
                        </span>
                     </div>
-                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-500 ease-out"
+                        className="h-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] transition-all duration-500 ease-out"
                         style={{ width: `${((currentStep + 1) / (selectedCourse.flow.length + 1)) * 100}%` }}
                       ></div>
                     </div>
                   </div>
                 )}
 
-                {/* ---------------- Step Content ---------------- */}
+                {/* Step Content */}
                 <div className="flex-grow flex flex-col justify-center">
                   <AnimatePresence mode="wait">
                     
@@ -377,19 +358,19 @@ function CourseSelectionContent() {
                           initial={{ rotate: -90 }}
                           animate={{ rotate: 0 }}
                           transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                          className="inline-block text-green-500 text-7xl drop-shadow-[0_0_20px_rgba(34,197,94,0.5)] bg-slate-900 rounded-full p-2"
+                          className="inline-block text-emerald-600 text-7xl"
                         >
-                          <FaCheckCircle className="bg-[#1e293b]" />
+                          <FaCheckCircle />
                         </motion.div>
-                        <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-600">
+                        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
                           Enquiry Submitted!
                         </h2>
-                        <p className="text-slate-300 text-lg">
+                        <p className="text-slate-600 text-lg">
                           Thank you for choosing <strong>{selectedCourse?.name}</strong>. Our advisors will contact you shortly.
                         </p>
                         <button
                           onClick={resetFlow}
-                          className="mt-6 px-8 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors font-semibold"
+                          className="mt-6 px-8 py-3 bg-[#0F4C81] hover:bg-[#0c3c66] text-white rounded-lg transition-colors font-semibold shadow-md"
                         >
                           Explore More Courses
                         </button>
@@ -406,7 +387,7 @@ function CourseSelectionContent() {
                         exit="exit"
                         className="w-full"
                       >
-                        <h3 className="text-2xl font-semibold mb-6 text-center text-slate-200">
+                        <h3 className="text-2xl font-bold mb-6 text-center text-slate-900">
                            {selectedCourse.flow[currentStep].title}
                         </h3>
                         <div className="grid gap-4 sm:grid-cols-2">
@@ -421,13 +402,13 @@ function CourseSelectionContent() {
                                 key={opt}
                                 onClick={() => handleOptionSelect(stepId, opt, isMultiple)}
                                 className={`
-                                  p-4 rounded-xl border-2 transition-all flex items-center justify-center text-md font-medium tracking-wide
+                                  p-4 rounded-xl border-2 transition-all flex items-center justify-center text-base font-semibold tracking-wide
                                   ${isSelected 
-                                    ? "bg-red-500/10 border-red-500 text-red-100 shadow-[0_0_15px_rgba(239,68,68,0.2)] scale-[1.02]" 
-                                    : "bg-slate-800/50 border-slate-700 text-slate-300 hover:border-slate-500 hover:bg-slate-700"}
+                                    ? "bg-blue-50 border-[#0F4C81] text-[#0F4C81] shadow-sm scale-[1.02]" 
+                                    : "bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50"}
                                 `}
                               >
-                                {opt} {isSelected && isMultiple && <span className="ml-2 text-red-500 font-bold">✓</span>}
+                                {opt} {isSelected && isMultiple && <span className="ml-2 text-[#0F4C81] font-bold">✓</span>}
                               </button>
                             );
                           })}
@@ -445,7 +426,7 @@ function CourseSelectionContent() {
                         exit="exit"
                         className="w-full max-w-sm mx-auto"
                       >
-                        <h3 className="text-2xl font-semibold mb-6 text-center text-slate-200">
+                        <h3 className="text-2xl font-bold mb-6 text-center text-slate-900">
                            Student Details
                         </h3>
                         <form onSubmit={handleSubmit} className="space-y-4">
@@ -453,7 +434,7 @@ function CourseSelectionContent() {
                             <input 
                               type="text" name="name" 
                               value={formData.name} onChange={handleFormChange}
-                              className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
+                              className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 transition-colors"
                               placeholder="Full Name"
                             />
                           </div>
@@ -461,7 +442,7 @@ function CourseSelectionContent() {
                             <input 
                               type="email" name="email" 
                               value={formData.email} onChange={handleFormChange}
-                              className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
+                              className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 transition-colors"
                               placeholder="Email Address"
                             />
                           </div>
@@ -469,13 +450,13 @@ function CourseSelectionContent() {
                             <input 
                               type="tel" name="phone" 
                               value={formData.phone} onChange={handleFormChange}
-                              className="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
+                              className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100 transition-colors"
                               placeholder="Phone Number"
                             />
                           </div>
                           
                           {errorMsg && (
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 text-sm text-center">
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-500 text-sm text-center">
                               {errorMsg}
                             </motion.div>
                           )}
@@ -483,7 +464,7 @@ function CourseSelectionContent() {
                           <button 
                             type="submit" 
                             disabled={isSubmitting}
-                            className="w-full mt-4 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-500 hover:to-orange-400 text-white font-bold py-3 rounded-lg shadow-[0_4px_20px_rgba(239,68,68,0.4)] hover:shadow-[0_4px_25px_rgba(239,68,68,0.6)] transition-all disabled:opacity-50"
+                            className="w-full mt-4 bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] text-white font-bold py-3 rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50"
                           >
                             {isSubmitting ? "Submitting..." : "Complete Booking"}
                           </button>
@@ -494,12 +475,12 @@ function CourseSelectionContent() {
                   </AnimatePresence>
                 </div>
 
-                {/* ---------------- Navigation Controls ---------------- */}
+                {/* Navigation Controls */}
                 {!isSuccess && (
-                  <div className="flex justify-between items-center mt-10 pt-6 border-t border-slate-700/50">
+                  <div className="flex justify-between items-center mt-10 pt-6 border-t border-slate-200">
                     <button
                       onClick={handlePrevStep}
-                      className="text-slate-400 hover:text-white flex items-center gap-2 transition-colors font-medium text-sm"
+                      className="text-slate-600 hover:text-slate-900 flex items-center gap-2 transition-colors font-medium text-sm"
                     >
                       <FaArrowLeft /> {currentStep === 0 ? "Change Course" : "Back"}
                     </button>
@@ -508,7 +489,7 @@ function CourseSelectionContent() {
                       <button
                         onClick={handleNextStep}
                         disabled={!isCurrentStepValid()}
-                        className="px-6 py-2 bg-slate-100 text-slate-900 font-bold rounded-lg disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white transition-colors"
+                        className="px-6 py-2 bg-[#0F4C81] text-white font-bold rounded-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0c3c66] transition-colors shadow-sm"
                       >
                         Next
                       </button>
@@ -534,11 +515,11 @@ export default function CourseSelection() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-[#0f172a] text-white">
+        <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-800">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-lg text-slate-400"
+            className="text-lg text-slate-500"
           >
             Loading...
           </motion.p>

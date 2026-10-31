@@ -52,10 +52,10 @@ function EnquireButton({ service, level, category, accent, className = "" }) {
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-xs font-semibold text-white transition-all hover:scale-105 hover:shadow-lg sm:text-sm ${className}`}
+      className={`inline-flex items-center justify-center rounded-full px-4 py-2 text-xs font-semibold text-white transition-all hover:scale-105 hover:shadow-md sm:text-sm ${className}`}
       style={{
-        background: `linear-gradient(135deg, ${accent}, ${accent}cc)`,
-        boxShadow: `0 4px 20px -4px ${accent}66`,
+        background: `linear-gradient(135deg, ${accent}, #0F4C81)`,
+        boxShadow: `0 4px 14px -3px rgba(15, 76, 129, 0.35)`,
       }}
     >
       Enquire About This Course
@@ -88,13 +88,13 @@ function LevelGrid({ service, categoryTitle, accent }) {
           key={level}
           variants={itemVariants}
           whileHover={{ scale: 1.02, y: -2 }}
-          className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition hover:border-white/20 hover:bg-white/8"
+          className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-blue-300 hover:shadow-md"
         >
           <div>
-            <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
               {service.title}
             </p>
-            <p className="mt-0.5 text-base font-bold text-white">{level}</p>
+            <p className="mt-0.5 text-base font-bold text-slate-900">{level}</p>
           </div>
           <EnquireButton
             service={service.title}
@@ -118,9 +118,9 @@ function CoachingServiceItem({ service, categoryTitle, accent }) {
       <motion.div
         variants={itemVariants}
         whileHover={{ scale: 1.01 }}
-        className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:p-5"
+        className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5"
       >
-        <span className="text-base font-semibold text-white">{service.title}</span>
+        <span className="text-base font-bold text-slate-900">{service.title}</span>
         <EnquireButton
           service={service.title}
           category={categoryTitle}
@@ -134,17 +134,17 @@ function CoachingServiceItem({ service, categoryTitle, accent }) {
     <motion.div
       variants={itemVariants}
       layout
-      className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm"
+      className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
     >
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left transition hover:bg-white/5 sm:px-5"
+        className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left transition hover:bg-slate-50 sm:px-5"
         aria-expanded={open}
       >
         <div>
-          <span className="text-base font-semibold text-white">{service.title}</span>
-          <p className="mt-0.5 text-xs text-slate-400">
+          <span className="text-base font-bold text-slate-900">{service.title}</span>
+          <p className="mt-0.5 text-xs text-slate-500 font-medium">
             {service.levels.length} programme{service.levels.length !== 1 ? "s" : ""} available
           </p>
         </div>
@@ -161,7 +161,7 @@ function CoachingServiceItem({ service, categoryTitle, accent }) {
             exit="exit"
             className="overflow-hidden"
           >
-            <div className="border-t border-white/10 px-4 pb-5 sm:px-5">
+            <div className="border-t border-slate-100 bg-slate-50/50 px-4 pb-5 sm:px-5">
               <LevelGrid
                 service={service}
                 categoryTitle={categoryTitle}
@@ -188,9 +188,9 @@ function VisaServiceGrid({ services, categoryTitle, accent }) {
           key={service.id}
           variants={itemVariants}
           whileHover={{ scale: 1.02, y: -2 }}
-          className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition hover:border-white/20 hover:bg-white/8 sm:p-5"
+          className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-blue-300 hover:shadow-md sm:p-5"
         >
-          <p className="text-base font-bold text-white">{service.title}</p>
+          <p className="text-base font-bold text-slate-900">{service.title}</p>
           <EnquireButton
             service={service.title}
             category={categoryTitle}
@@ -214,22 +214,19 @@ export function ServiceDetailPanel({ category }) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.5)] backdrop-blur-xl"
-      style={{ boxShadow: `0 24px 80px -20px ${category.glow}` }}
+      className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/50 shadow-xl"
     >
       <div
-        className={`relative overflow-hidden border-b border-white/10 bg-gradient-to-r ${category.gradient} px-5 py-5 sm:px-7 sm:py-6`}
+        className={`relative overflow-hidden border-b border-slate-200 bg-gradient-to-r from-slate-900 via-[#0F4C81] to-slate-900 px-5 py-6 sm:px-7 sm:py-7 text-white`}
       >
-        <div className="absolute inset-0 bg-[#0a0f1c]/50" />
         <div className="relative z-10">
           <p
-            className="text-xs font-bold uppercase tracking-[0.25em]"
-            style={{ color: category.accent }}
+            className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300"
           >
             Programmes
           </p>
-          <h3 className="mt-1 text-xl font-bold text-white sm:text-2xl">{category.title}</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-300">{category.desc}</p>
+          <h3 className="mt-1 text-xl font-extrabold text-white sm:text-2xl">{category.title}</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-200">{category.desc}</p>
         </div>
       </div>
 

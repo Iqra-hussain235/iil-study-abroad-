@@ -18,41 +18,45 @@ export default function Contact() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-slate-50 text-slate-900">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] items-start">
-          <section className="rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-2xl shadow-slate-950/20 backdrop-blur-xl">
-            <p className="text-sm uppercase tracking-[0.3em] text-red-300">Contact Center</p>
-            <h1 className="mt-4 text-4xl font-bold text-white">Get in touch with International Institute Of Language</h1>
-            <p className="mt-4 max-w-2xl text-slate-300">
+          <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
+            <span className="inline-block text-xs font-bold uppercase tracking-[0.25em] text-[#0F4C81] bg-blue-100/80 border border-blue-200/80 px-4 py-1.5 rounded-full mb-3">
+              Contact Center
+            </span>
+            <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold text-slate-900">
+              Get in touch with International Institute Of Language
+            </h1>
+            <p className="mt-4 max-w-2xl text-slate-600">
               Send your details and our team will reach out to you with complete study abroad, visa, and language support.
             </p>
 
             <div className="mt-8 space-y-5">
               <div>
-                <label className="text-sm text-slate-300">Name</label>
+                <label className="text-sm font-semibold text-slate-700">Name</label>
                 <input
                   value={data.name}
                   onChange={(e) => setData({ ...data, name: e.target.value })}
-                  className="mt-2 w-full rounded-3xl border border-white/10 bg-slate-950/90 px-4 py-3 text-white outline-none transition focus:border-blue-400"
+                  className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100"
                   placeholder="Your full name"
                 />
               </div>
               <div>
-                <label className="text-sm text-slate-300">Email</label>
+                <label className="text-sm font-semibold text-slate-700">Email</label>
                 <input
                   value={data.email}
                   onChange={(e) => setData({ ...data, email: e.target.value })}
-                  className="mt-2 w-full rounded-3xl border border-white/10 bg-slate-950/90 px-4 py-3 text-white outline-none transition focus:border-blue-400"
+                  className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100"
                   placeholder="you@example.com"
                 />
               </div>
               <div>
-                <label className="text-sm text-slate-300">Message</label>
+                <label className="text-sm font-semibold text-slate-700">Message</label>
                 <textarea
                   value={data.message}
                   onChange={(e) => setData({ ...data, message: e.target.value })}
-                  className="mt-2 h-40 w-full rounded-3xl border border-white/10 bg-slate-950/90 px-4 py-3 text-white outline-none transition focus:border-blue-400"
+                  className="mt-2 h-40 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#0F4C81] focus:ring-2 focus:ring-blue-100"
                   placeholder="Share your enquiry or preferred course"
                 />
               </div>
@@ -60,29 +64,28 @@ export default function Contact() {
 
             <button
               onClick={handleSubmit}
-              className="btn-glow mt-6 w-full disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-6 w-full rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] py-3.5 px-6 font-semibold text-white shadow-md transition-all hover:opacity-95 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
             >
               Submit Enquiry
             </button>
-            {status && <p className="mt-4 text-sm text-slate-300">{status}</p>}
+            {status && <p className="mt-4 text-sm font-medium text-emerald-600">{status}</p>}
           </section>
 
-          <aside className="space-y-6 rounded-[36px] border border-white/10 bg-blue-950/85 p-8 shadow-xl shadow-slate-950/40">
+          <aside className="space-y-6 rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
             <div>
-              <h2 className="text-2xl font-semibold text-white">Contact Details</h2>
-              <p className="mt-3 text-slate-300">Near MIT College, Wave Cinema Road, Moradabad</p>
+              <h2 className="text-2xl font-bold text-slate-900">Contact Details</h2>
+              <p className="mt-3 text-slate-600">Near MIT College, Wave Cinema Road, Moradabad</p>
             </div>
             <div>
-              <p className="text-sm uppercase tracking-[0.25em] text-red-300">Phone</p>
-              <p className="mt-2 text-lg font-semibold text-white">+91 8445955365</p>
-                {/* <p className="mt-2 text-lg font-semibold text-white">+91 79007 65352</p> */}
+              <p className="text-xs uppercase tracking-[0.2em] font-bold text-[#ff2f56]">Phone</p>
+              <p className="mt-1 text-lg font-bold text-slate-900">+91 8445955365</p>
             </div>
             <div>
-              <p className="text-sm uppercase tracking-[0.25em] text-red-300">Email</p>
-              <p className="mt-2 text-lg font-semibold text-white">support@ILL.com</p>
+              <p className="text-xs uppercase tracking-[0.2em] font-bold text-[#ff2f56]">Email</p>
+              <p className="mt-1 text-lg font-bold text-slate-900">support@ILL.com</p>
             </div>
-            <div className="rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-slate-300">
-              <h3 className="font-semibold text-white">Office Hours</h3>
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-slate-600">
+              <h3 className="font-bold text-slate-900">Office Hours</h3>
               <p className="mt-2">Mon - Sat: 09:00 AM - 07:00 PM</p>
             </div>
           </aside>

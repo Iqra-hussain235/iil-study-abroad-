@@ -99,12 +99,10 @@ function ImageFadePair({ images, title, imageLabel, imageSubLabel }) {
       transition={{ duration: 1, ease: "easeOut" }}
       className="relative mx-auto w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[380px]"
     >
-      <div className="absolute -inset-3 rounded-[1.8rem] bg-blue-500/15 blur-xl" />
-      <div className="absolute -inset-1 rounded-[1.6rem] bg-blue-400/10 blur-md" />
+      <div className="absolute -inset-2 rounded-[1.8rem] bg-blue-100/70 blur-xl" />
 
-      <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(59,130,246,0.15)] bg-slate-900">
-        
-        <div className="h-[240px] sm:h-[270px] flex items-center justify-center p-3 bg-slate-800/50">
+      <div className="relative w-full rounded-2xl overflow-hidden border border-slate-200 shadow-xl shadow-slate-200/80 bg-white">
+        <div className="h-[240px] sm:h-[270px] flex items-center justify-center p-3 bg-slate-50/80">
           <img
             src={img}
             alt={title}
@@ -112,11 +110,11 @@ function ImageFadePair({ images, title, imageLabel, imageSubLabel }) {
           />
         </div>
         
-        <div className="p-5 bg-gradient-to-t from-slate-900 via-slate-900 to-slate-800 border-t border-white/5">
-          <div className="h-1 w-10 bg-blue-500 rounded-full mb-2" />
-          <p className="text-white font-bold text-base">{label}</p>
+        <div className="p-5 bg-white border-t border-slate-100">
+          <div className="h-1 w-10 bg-[#0F4C81] rounded-full mb-2" />
+          <p className="text-slate-900 font-bold text-base">{label}</p>
           {subLabel && (
-            <p className="text-blue-300 text-xs mt-1">{subLabel}</p>
+            <p className="text-[#0F4C81] font-medium text-xs mt-1">{subLabel}</p>
           )}
         </div>
       </div>
@@ -138,10 +136,10 @@ export default function Hero() {
         loop={true}
         autoHeight={true}
         style={{
-          "--swiper-navigation-color": "rgba(255, 255, 255, 0.7)",
-          "--swiper-pagination-color": "#3b82f6",
-          "--swiper-pagination-bullet-inactive-color": "#ffffff",
-          "--swiper-pagination-bullet-inactive-opacity": "0.3",
+          "--swiper-navigation-color": "#0F4C81",
+          "--swiper-pagination-color": "#0F4C81",
+          "--swiper-pagination-bullet-inactive-color": "#94a3b8",
+          "--swiper-pagination-bullet-inactive-opacity": "0.6",
           "--swiper-navigation-size": "24px",
         }}
         className="w-full relative z-10"
@@ -164,7 +162,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.6 }}
-                    className="inline-block w-fit mx-auto lg:mx-0 bg-blue-900/40 border border-blue-500/30 text-blue-300 px-4 py-1 rounded-full text-sm mb-4"
+                    className="inline-block w-fit mx-auto lg:mx-0 bg-blue-50 border border-blue-200 text-[#0F4C81] px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide mb-4 shadow-sm"
                   >
                     ★ YOUR DREAM. OUR GUIDANCE. GLOBAL SUCCESS.
                   </motion.span>
@@ -173,7 +171,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.25, duration: 0.7 }}
-                    className="text-3xl sm:text-4xl lg:text-3xl xl:text-5xl font-extrabold tracking-tight text-white leading-[1.15] drop-shadow-sm"
+                    className="text-3xl sm:text-4xl lg:text-3xl xl:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.15]"
                   >
                     {slide.title}
                   </motion.h1>
@@ -182,7 +180,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.35, duration: 0.7 }}
-                    className="mt-3 text-base sm:text-lg font-medium text-slate-200"
+                    className="mt-3 text-base sm:text-lg font-semibold text-slate-700"
                   >
                     {slide.subtitle}
                   </motion.p>
@@ -191,7 +189,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.45, duration: 0.7 }}
-                    className="mt-2 text-sm sm:text-base text-slate-400 leading-relaxed font-light"
+                    className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed font-normal"
                   >
                     {slide.description}
                   </motion.p>
@@ -204,7 +202,7 @@ export default function Hero() {
                   >
                     <Link
                       href={slide.link}
-                      className="group inline-flex items-center justify-center px-7 py-3.5 text-base font-semibold text-white bg-blue-600 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:bg-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] transition-all duration-300 hover:scale-105"
+                      className="group inline-flex items-center justify-center px-7 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] rounded-full shadow-lg shadow-blue-900/15 hover:shadow-xl transition-all duration-300 hover:scale-105"
                     >
                       {slide.buttonText}
                       <svg className="w-5 h-5 ml-2 -mr-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -229,16 +227,16 @@ export default function Hero() {
                     />
                   ) : (
                     <div className="relative group mx-auto w-full max-w-sm sm:max-w-md lg:max-w-lg">
-                      <div className="absolute -inset-4 bg-gradient-to-tr from-blue-500/30 via-transparent to-indigo-500/30 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-700" />
+                      <div className="absolute -inset-3 bg-gradient-to-tr from-blue-100 via-transparent to-indigo-100 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
 
-                      <div className="relative aspect-[4/3] w-full rounded-[2rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-slate-900/50 backdrop-blur-sm">
+                      <div className="relative aspect-[4/3] w-full rounded-[2rem] overflow-hidden border border-slate-200 shadow-xl shadow-slate-200/70 bg-white">
                         <Image
                           src={slide.image}
                           alt={slide.title}
                           fill
                           priority={true}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover object-center transform transition-transform duration-[2000ms] ease-out group-hover:scale-110 will-change-transform"
+                          className="object-cover object-center transform transition-transform duration-[2000ms] ease-out group-hover:scale-105 will-change-transform"
                         />
                       </div>
                     </div>

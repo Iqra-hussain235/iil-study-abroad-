@@ -1,15 +1,8 @@
-// manu will  handle event 
-
 "use client";
 
 import React from "react";
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import { useState, useEffect, Suspense } from "react";
-import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-
 
 const events = [
   {
@@ -30,7 +23,7 @@ const events = [
     id: 3,
     title: "Where Memories Begin",
     description:
-      "An outing where  student shared their enjoyable gesture with their trainer who always stand by them.",
+      "An outing where student shared their enjoyable gesture with their trainer who always stand by them.",
     image: "/images/img3.jpeg",
   },
   {
@@ -51,39 +44,30 @@ const events = [
     id: 6,
     title: "Travel, Learn, Grow",
     description:
-      "An  exposure of the day where all spoke in an open area where we tried to give experience of real life challenges overcome.",
+      "An exposure of the day where all spoke in an open area where we tried to give experience of real life challenges overcome.",
     image: "/images/img6.jpeg",
   },
 ];
 
 export default function EventShowcasePage() {
   return (
-    <div className="bg-[#020B1C] min-h-screen overflow-hidden text-white">
+    <div className="bg-slate-50 min-h-screen text-slate-900 overflow-hidden font-sans">
       {/* Hero Section */}
-      <section className="relative py-28 px-6 md:px-16 text-center bg-gradient-to-b from-[#020B1C] to-[#04122E] overflow-hidden">
-        <motion.div
-          animate={{ y: [0, -20, 0] }}
-          transition={{ repeat: Infinity, duration: 5 }}
-          className="absolute top-10 left-10 w-40 h-40 rounded-full bg-blue-400/10 blur-3xl opacity-70"
-        />
+      <section className="relative py-20 px-6 md:px-16 text-center bg-white border-b border-slate-200 overflow-hidden">
+        <div className="absolute top-10 left-10 w-40 h-40 rounded-full bg-blue-100/60 blur-3xl opacity-70 pointer-events-none" />
+        <div className="absolute bottom-10 right-10 w-52 h-52 rounded-full bg-rose-100/50 blur-3xl opacity-60 pointer-events-none" />
 
-        <motion.div
-          animate={{ y: [0, 20, 0] }}
-          transition={{ repeat: Infinity, duration: 6 }}
-          className="absolute bottom-10 right-10 w-52 h-52 rounded-full bg-white/10 blur-3xl opacity-60"
-        />
-
-        <p className="uppercase tracking-[6px] text-sm text-gray-300 mb-4 font-medium">
+        <span className="inline-block rounded-full bg-blue-100/80 border border-blue-200/80 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-[#0F4C81] mb-4">
           Explore Experiences
-        </p>
+        </span>
 
-        <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+        <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-6">
           Events That Create
           <br />
           Beautiful Memories
         </h1>
 
-        <p className="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 leading-relaxed">
+        <p className="max-w-3xl mx-auto text-base md:text-lg text-slate-600 leading-relaxed">
           From adventure trips to special celebrations, discover experiences
           crafted to make every moment unforgettable. Every event tells a story,
           and every journey becomes a memory worth keeping.
@@ -91,49 +75,49 @@ export default function EventShowcasePage() {
       </section>
 
       {/* Large Alternating Event Sections */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-20 space-y-32">
+      <section className="max-w-7xl mx-auto px-6 md:px-12 py-20 space-y-24">
         {events.map((event, index) => {
           const isEven = index % 2 === 0;
 
           return (
             <motion.div
               key={event.id}
-              initial={{ opacity: 0, x: isEven ? -250 : 250 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               viewport={{ once: true }}
               className="grid md:grid-cols-2 gap-12 items-center"
             >
               {/* Image */}
               <div className={`${!isEven ? "md:order-2" : ""}`}>
                 <motion.div
-                  whileHover={{ scale: 1.03 }}
+                  whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}
-                  className="rounded-[30px] overflow-hidden shadow-2xl border border-white/10"
+                  className="rounded-[28px] overflow-hidden shadow-xl border border-slate-200 bg-white"
                 >
                   <img
                     src={event.image}
                     alt={event.title}
-                    className="w-full h-[500px] object-cover"
+                    className="w-full h-[460px] object-cover"
                   />
                 </motion.div>
               </div>
 
               {/* Content */}
               <div className={`${!isEven ? "md:order-1" : ""}`}>
-                <p className="text-sm uppercase tracking-[4px] text-gray-300 mb-3 font-medium">
+                <span className="inline-block text-xs uppercase tracking-[3px] font-bold text-[#ff2f56] mb-3">
                   Featured Event
-                </p>
+                </span>
 
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-5 leading-tight">
                   {event.title}
                 </h2>
 
-                <p className="text-lg text-gray-300 leading-relaxed mb-8">
+                <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-6">
                   {event.description}
                 </p>
 
-                <p className="text-base font-medium text-white italic border-l-4 border-white pl-4">
+                <p className="text-base font-semibold text-[#0F4C81] italic border-l-4 border-[#0F4C81] pl-4">
                   {event.id === 1
                     ? "Every journey opens new doors to adventure, learning, and unforgettable memories."
                     : event.id === 2
@@ -153,46 +137,49 @@ export default function EventShowcasePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 mt-10">
-        <div className="max-w-7xl mx-auto px-6 md:px-16 py-14">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+      <footer className="border-t border-slate-200 bg-white mt-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-16 py-12">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-3">
+              <h3 className="text-xl font-bold text-slate-900 mb-1">
                 International Institute Of Language
               </h3>
-              <p className="text-gray-300 text-lg">
+              <p className="text-slate-600 text-sm">
                 Professional guidance for study abroad, visas, and language exams.
               </p>
             </div>
 
-            <div className="flex gap-8 text-lg text-gray-300 font-medium">
+            <div className="flex gap-6 text-sm font-semibold text-slate-700">
               <a
                 href="https://www.linkedin.com/company/iilstudyabroad"
                 target="_blank"
                 rel="noopener noreferrer"
-                >
+                className="hover:text-[#0F4C81]"
+              >
                 LinkedIn
-                </a>
-                <a
+              </a>
+              <a
                 href="https://www.facebook.com/iiLstudyabroad"
                 target="_blank"
                 rel="noopener noreferrer"
-                >
+                className="hover:text-[#0F4C81]"
+              >
                 Facebook
-                </a>
-                <a
+              </a>
+              <a
                 href="https://www.instagram.com/iil.studyabroad"
                 target="_blank"
                 rel="noopener noreferrer"
-                >
+                className="hover:text-[#0F4C81]"
+              >
                 Instagram
-                </a>
+              </a>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-white/10 py-8 text-center">
-          <p className="text-gray-400 text-lg">
+        <div className="border-t border-slate-100 py-6 text-center">
+          <p className="text-slate-500 text-xs">
             © 2026 International Institute Of Language. All rights reserved.
           </p>
         </div>

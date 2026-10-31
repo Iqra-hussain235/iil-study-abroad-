@@ -54,16 +54,8 @@ export default function Footer() {
 
   return (
     <>
-      {/* NOTE: background is set explicitly to match globals.css's --background
-          value (#020617) so every section is guaranteed the exact same color,
-          instead of relying on transparency/inheritance which was inconsistent. */}
-      <footer className="relative overflow-hidden bg-[#020617] text-slate-300">
-        <img
-          src="/15_footer_background.png"
-          alt=""
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.06]"
-        />
-        <div className="pointer-events-none absolute inset-0 z-0">
+      <footer className="relative overflow-hidden bg-slate-900 text-slate-300 border-t border-slate-800">
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
           <div className="absolute -top-[20%] left-[10%] h-[40%] w-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
           <div className="absolute bottom-[-10%] right-[5%] h-[40%] w-[40%] rounded-full bg-[#ff2f56]/5 blur-[120px]" />
         </div>
@@ -81,7 +73,7 @@ export default function Footer() {
                 <img
                   src="/01_logo.png"
                   alt="International Institute Of Language logo"
-                  className="h-12 w-12 rounded-full object-cover"
+                  className="h-12 w-12 rounded-full object-cover border border-white/20 bg-white"
                 />
                 <p className="text-base font-extrabold leading-tight text-white">
                   International Institute
@@ -103,7 +95,7 @@ export default function Footer() {
                       key={index}
                       type="button"
                       onClick={() => openLink(social.url)}
-                      className={`flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-1 ${social.hoverClass}`}
+                      className={`flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 bg-slate-800/80 text-slate-300 transition hover:-translate-y-1 ${social.hoverClass}`}
                     >
                       <Icon size={16} />
                     </button>
@@ -112,7 +104,7 @@ export default function Footer() {
                 <button
                   type="button"
                   onClick={openWhatsApp}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-1 hover:bg-green-500 hover:text-white"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 bg-slate-800/80 text-slate-300 transition hover:-translate-y-1 hover:bg-green-500 hover:text-white"
                 >
                   <FaWhatsapp size={16} />
                 </button>
@@ -128,7 +120,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-slate-400 transition hover:text-red-300"
+                      className="text-sm text-slate-400 transition hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -146,7 +138,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-slate-400 transition hover:text-red-300"
+                      className="text-sm text-slate-400 transition hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -170,7 +162,7 @@ export default function Footer() {
                 </li>
                 <li className="flex items-center gap-3">
                   <FiMail className="shrink-0 text-blue-400" />
-                  <span>info@iilstudyabroad.com</span>
+                  <span>Contact@iilstudyabroad.com</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <FiClock className="shrink-0 text-blue-400" />
@@ -180,14 +172,14 @@ export default function Footer() {
 
               <Link
                 href="/enquiry"
-                className="mt-5 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_0_20px_rgba(255,47,86,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(255,47,86,0.4)]"
+                className="mt-5 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
               >
                 Enquire Now
               </Link>
             </div>
           </div>
 
-          <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
+          <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-slate-800 pt-6 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
             <p>© 2026 International Institute Of Language. All rights reserved.</p>
             <div className="flex gap-4">
               <span className="cursor-pointer hover:text-slate-300">Privacy Policy</span>

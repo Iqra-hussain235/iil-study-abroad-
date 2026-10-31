@@ -395,7 +395,7 @@ const CzechPage = () => {
                     </div>
                     <div>
                       <p className="text-sm text-blue-200">Email Us</p>
-                      <p className="font-semibold">info@iilstudyabroad.com</p>
+                      <p className="font-semibold">Contact@iilstudyabroad.com</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">

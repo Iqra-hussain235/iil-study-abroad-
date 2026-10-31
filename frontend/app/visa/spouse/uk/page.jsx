@@ -15,7 +15,7 @@ import {
 
 const PHONE_NUMBER = "+91-8630048365";
 const WHATSAPP_NUMBER = "918630048365";
-const EMAIL = "info@iilstudyabroad.com";
+const EMAIL = "Contact@iilstudyabroad.com";
 const ADDRESS = "Near MIT College, Wave Cinema Road, Moradabad, Uttar Pradesh, India";
 const YEARS_EXPERIENCE = "9";
 const SOCIALS = {

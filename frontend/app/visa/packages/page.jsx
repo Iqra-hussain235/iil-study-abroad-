@@ -257,7 +257,7 @@ export default function TourPackagesPage() {
                       </div>
                       <div>
                         <div className="text-slate-400 text-sm">Email Us</div>
-                        <div className="text-white font-semibold text-lg">info@iilstudyabroad.com</div>
+                        <div className="text-white font-semibold text-lg">Contact@iilstudyabroad.com</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
