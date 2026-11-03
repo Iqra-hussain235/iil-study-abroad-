@@ -25,10 +25,14 @@ const app = express();
 // );
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL||[
+    "https://iilstudyabroad.com",
+    "https://www.iilstudyabroad.com"
+  ],
     credentials: true
   })
 );
+
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
