@@ -84,15 +84,20 @@ function EnquiryForm() {
     }
 
     try {
+      const courseString = resolvedCourses.join(", ");
       const response = await axios.post("/api/enquiry", {
         name: form.name,
-        email: form.email,
+        fullName: form.name,
+        email: form.email || "noemail@placeholder.com",
         phone: form.phone,
-        course: resolvedCourses.join(", "),
+        visaType: courseString || "General Enquiry",
+        course: courseString,
         courses: resolvedCourses,
         service: serviceParam || undefined,
         level: levelParam || undefined,
         category: categoryParam || undefined,
+        purpose: "Course Enquiry",
+        page: "enquiry",
       });
 
       if (response.data?.success !== false) {
@@ -175,7 +180,7 @@ function EnquiryForm() {
 
                 <div>
                   <label className="mb-1 block text-sm font-semibold text-slate-700">
-                    Email Address (Optional)
+                    Email Address
                   </label>
                   <input
                     value={form.email}
