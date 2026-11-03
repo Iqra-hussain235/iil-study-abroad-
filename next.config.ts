@@ -1,11 +1,9 @@
+
 import type { NextConfig } from "next";
 
-const configuredBackend = "https://internationalinstituteoflanguage-1.onrender.com";
+const configuredBackend =
+  process.env.BACKEND_URL || "https://api.iilstudyabroad.com";
 
-console.log(process.env.BACKEND_URL,
-  process.env.NEXT_PUBLIC_BACKEND_URL ,
-  process.env.NEXT_PUBLIC_API_URL ,
-  "http://localhost:5000")
 const backendBaseUrl = configuredBackend
   .trim()
   .replace(/\/+$/, "")
