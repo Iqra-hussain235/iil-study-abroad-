@@ -14,12 +14,18 @@ connectDB();
 
 const app = express();
 
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       // Allow all origins dynamically to support dynamic deployments
+//       callback(null, true);
+//     },
+//     credentials: true
+//   })
+// );
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow all origins dynamically to support dynamic deployments
-      callback(null, true);
-    },
+    origin: process.env.FRONTEND_URL,
     credentials: true
   })
 );
