@@ -14,10 +14,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// export const metadata: Metadata = {
+//   title: "International Institute Of Languages",
+//   description:
+//     "International Institute Of Language - professional study abroad, visa, and language training.",
+// };
 export const metadata: Metadata = {
-  title: "International Institute Of Language",
+  title: "International Institute Of Languages",
   description:
-    "International Institute Of Language - professional study abroad, visa, and language training.",
+    "International Institute Of Languages - professional study abroad, visa assistance, IELTS, and language training.",
+  applicationName: "International Institute Of Languages",
+  openGraph: {
+    title: "International Institute Of Languages",
+    description:
+      "Professional study abroad, visa assistance, and language training.",
+    siteName: "International Institute Of Languages",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
