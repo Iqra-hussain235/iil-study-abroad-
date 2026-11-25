@@ -314,9 +314,9 @@ export default function Navbar() {
       <nav className="fixed left-0 right-0 top-0 z-50 w-full border-b border-white/10 bg-[#0F4C81]/95 text-white shadow-2xl shadow-slate-950/30 backdrop-blur-xl">
 
         {/* Animated airplane */}
-        <div className="pointer-events-none absolute left-20 top-4 hidden text-2xl opacity-80 animate-plane lg:block">
+        {/* <div className="pointer-events-none absolute left-20 top-4 hidden text-2xl opacity-80 animate-plane lg:block">
           ✈️
-        </div>
+        </div> */}
 
         <div className="mx-auto flex max-w-[110rem] items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
 
