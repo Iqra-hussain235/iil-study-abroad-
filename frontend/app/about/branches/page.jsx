@@ -1,17 +1,203 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { MapPin, Phone, Mail, Clock, ChevronLeft, ChevronRight } from "lucide-react";
 import PageHero from "../../../components/about/PageHero";
 import Reveal from "../../../components/about/Reveal";
 import AboutFooter from "../../../components/about/AboutFooter";
 import { BRANCHES } from "../../../data/aboutData";
 
-// ── Institute image (apni image public/ folder me rakho aur naam yahan likho) ──
 const INSTITUTE_IMAGE = "/Your Gateway to a Global Future.png";
-// Image ke neeche chhota caption chahiye to likho, nahi chahiye to "" rehne do.
 const INSTITUTE_CAPTION = "";
+
+
+const GALLERY_SLIDES = [
+  { src: "/class1.jpeg", title: "Learning Together" },
+  { src: "/class2.jpeg", title: "Inside Our Classrooms" },
+  { src: "/18_image.png", title: "Meet The Team" },
+  { src: "/19_image.png", title: "Moments At IIL" },
+  { src: "/certificte.jpeg", title: "Our Achievements" },
+];
+const SLIDE_MS = 4500; 
+const TICK_MS = 50;
+
+const slideVariants = {
+  enter: (d) => ({ opacity: 0, x: d * 70, scale: 1.04 }),
+  center: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: (d) => ({
+    opacity: 0,
+    x: d * -70,
+    scale: 0.98,
+    transition: { duration: 0.5 },
+  }),
+};
+
+
+function BranchSlideshow() {
+  const total = GALLERY_SLIDES.length;
+  const [index, setIndex] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [progress, setProgress] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  const goTo = (i, d) => {
+    setDir(d ?? (i > index ? 1 : -1));
+    setIndex((i + total) % total);
+    setProgress(0);
+  };
+
+ 
+  useEffect(() => {
+    if (paused || reduceMotion || total < 2) return;
+    const t = setInterval(
+      () => setProgress((p) => p + (100 * TICK_MS) / SLIDE_MS),
+      TICK_MS
+    );
+    return () => clearInterval(t);
+  }, [paused, reduceMotion, total]);
+
+
+  useEffect(() => {
+    if (progress >= 100) {
+      setDir(1);
+      setIndex((i) => (i + 1) % total);
+      setProgress(0);
+    }
+  }, [progress, total]);
+
+  if (total === 0) return null;
+  const current = GALLERY_SLIDES[index];
+
+  return (
+    <div
+      className="mx-auto"
+      style={{ width: "min(100%, calc(60vh * 1.7778))", minWidth: "min(100%, 340px)" }}
+    >
+      <div
+        className="group relative aspect-[4/3] overflow-hidden rounded-3xl bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)] sm:aspect-video"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        <AnimatePresence initial={false} custom={dir}>
+          <motion.div
+            key={index}
+            custom={dir}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute inset-0"
+          >
+            {/* blurred backdrop with slow zoom */}
+            <motion.img
+              aria-hidden
+              src={current.src}
+              alt=""
+              initial={{ scale: 1.1 }}
+              animate={{ scale: 1.25 }}
+              transition={{ duration: SLIDE_MS / 1000 + 1, ease: "linear" }}
+              className="absolute inset-0 h-full w-full object-cover opacity-60 blur-2xl"
+            />
+            <div className="absolute inset-0 bg-black/30" />
+            {/* actual image: poori dikhti hai */}
+            <img
+              src={current.src}
+              alt={current.title}
+              className="relative h-full w-full object-contain"
+            />
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
+
+        {/* caption */}
+        <motion.p
+          key={`cap-${index}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="absolute bottom-6 left-6 right-6 text-lg font-bold text-white drop-shadow-lg sm:bottom-8 sm:left-8 sm:text-2xl"
+        >
+          {current.title}
+        </motion.p>
+
+        {/* counter */}
+        <div className="absolute right-5 top-4 flex items-baseline gap-1 text-white drop-shadow-lg sm:right-8 sm:top-6">
+          <motion.span
+            key={`num-${index}`}
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl font-extrabold sm:text-4xl"
+          >
+            {String(index + 1).padStart(2, "0")}
+          </motion.span>
+          <span className="text-sm font-semibold text-white/60">
+            / {String(total).padStart(2, "0")}
+          </span>
+        </div>
+
+        {/* arrows */}
+        {total > 1 && (
+          <>
+            <motion.button
+              whileHover={{ scale: 1.12 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => goTo(index - 1, -1)}
+              aria-label="Previous slide"
+              className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur transition hover:bg-[#ff2f56] sm:left-5 sm:opacity-0 sm:group-hover:opacity-100"
+            >
+              <ChevronLeft size={22} />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.12 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => goTo(index + 1, 1)}
+              aria-label="Next slide"
+              className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur transition hover:bg-[#ff2f56] sm:right-5 sm:opacity-0 sm:group-hover:opacity-100"
+            >
+              <ChevronRight size={22} />
+            </motion.button>
+          </>
+        )}
+
+        {/* progress bar */}
+        <div className="absolute inset-x-0 bottom-0 h-1 bg-white/20">
+          <div
+            className="h-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81]"
+            style={{ width: `${Math.min(progress, 100)}%` }}
+          />
+        </div>
+      </div>
+
+      {/* thumbnails */}
+      {total > 1 && (
+        <div className="mt-5 flex justify-center gap-3 overflow-x-auto pb-2">
+          {GALLERY_SLIDES.map((s, i) => (
+            <motion.button
+              key={s.src}
+              onClick={() => goTo(i)}
+              whileHover={{ y: -4 }}
+              animate={{ scale: i === index ? 1.08 : 1, opacity: i === index ? 1 : 0.55 }}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-14 w-20 shrink-0 overflow-hidden rounded-lg transition-shadow sm:h-16 sm:w-24 ${
+                i === index ? "ring-2 ring-[#ff2f56] ring-offset-2 ring-offset-[#050b18]" : ""
+              }`}
+            >
+              <img src={s.src} alt="" className="h-full w-full object-cover" />
+            </motion.button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 // ────────────────────────────────────────────────────────────────
 // OUR BRANCHES  →  route: /about/branches
@@ -37,7 +223,7 @@ export default function BranchesPage() {
           { label: "About", href: "/about" },
           { label: "Our Branches" },
         ]}
-        title="Our Branches"
+        title="Moradabad"
         subtitle="Visit us for one-to-one guidance on study visas, work permits and language coaching."
       />
 
@@ -69,6 +255,28 @@ export default function BranchesPage() {
             </p>
           </Reveal>
         )}
+      </section>
+
+      {/* ────────────── SLIDESHOW ────────────── */}
+      <section className="relative mt-16 overflow-hidden bg-[#050b18] px-6 py-16 md:px-16 md:py-24">
+        <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-[60%] -translate-x-1/2 rounded-full bg-blue-600/15 blur-[120px]" />
+        <div className="pointer-events-none absolute -bottom-20 right-10 h-64 w-64 rounded-full bg-[#ff2f56]/10 blur-[110px]" />
+
+        <Reveal>
+          <p className="relative text-center text-sm font-semibold uppercase tracking-widest text-[#ff2f56]">
+            Life At IIL
+          </p>
+          <h2 className="relative mt-2 text-center text-3xl font-extrabold text-white">
+            A Glimpse Inside Our Institute
+          </h2>
+          <div className="relative mx-auto mb-10 mt-3 h-1 w-20 rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81]" />
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <div className="relative">
+            <BranchSlideshow />
+          </div>
+        </Reveal>
       </section>
 
       <section className="bg-slate-50 px-6 py-16 md:px-16 md:py-24">

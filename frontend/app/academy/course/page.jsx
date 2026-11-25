@@ -8,8 +8,141 @@ import {
   FaGlobe, FaCertificate, FaComments, FaCheckCircle, 
   FaArrowLeft, FaGraduationCap, FaPlane, FaFileSignature
 } from "react-icons/fa";
+import { ChevronDown, Star, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import ServiceEnquiryForm from "@/components/ServiceEnquiryForm";
+
+// ------------------------------
+// EXTRA DISPLAY CONTENT (sirf design ke liye, yahan se text badal sakte ho)
+// ------------------------------
+const COURSE_TAGLINES = {
+  english: "Speak with clarity and confidence",
+  french: "Learn the language of culture",
+  german: "Your gateway to study in Germany",
+  ielts: "Score the band you need",
+  pte: "Computer-based test, faster results",
+  oet: "English for healthcare professionals",
+  dl: "Quick online English test",
+  celpip: "English test for Canada",
+  "teacher-trainer": "Train to teach with confidence",
+  interview: "Walk into every interview ready",
+};
+
+const QUOTES = [
+  { quote: "The limits of my language mean the limits of my world.", by: "Ludwig Wittgenstein" },
+  { quote: "Success is the sum of small efforts repeated day in and day out.", by: "Team IIL" },
+];
+
+const STATS = [
+  { value: "10+", label: "Programs" },
+  { value: "Online & Offline", label: "Flexible Modes" },
+  { value: "Group & Solo", label: "Batch Options" },
+  { value: "Weekly", label: "Mock Tests" },
+];
+
+const WHY_POINTS = [
+  "Extra grammar improvement classes",
+  "Multimedia classes with modern facilities",
+  "Up-to-date library of study material",
+  "Weekly mock tests for practice analysis",
+];
+
+const STEPS = [
+  { title: "Pick Your Course", desc: "Choose a language, exam or skill program from the list above." },
+  { title: "Customise It", desc: "Select mode, type and level step by step to suit your needs." },
+  { title: "Share Your Details", desc: "Submit your name and phone number to complete the booking." },
+  { title: "We Call You", desc: "Our advisors contact you shortly to guide you further." },
+];
+
+const PHOTOS = ["/class1.jpeg", "/class2.jpeg", "/18_image.png"];
+
+// ------------------------------
+// ANIMATION HELPERS
+// ------------------------------
+function Reveal({ children, delay = 0, x = 0, y = 30, className = "" }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x, y }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const wordParent = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
+const wordChild = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
+function AnimatedWords({ text }) {
+  return (
+    <motion.span variants={wordParent} initial="hidden" whileInView="show" viewport={{ once: true }}>
+      {text.split(" ").map((word, i) => (
+        <motion.span key={i} variants={wordChild} className="mr-[0.25em] inline-block">
+          {word}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
+const staggerParent = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
+const staggerChild = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
+function SectionHeading({ eyebrow, title }) {
+  return (
+    <Reveal className="mx-auto mb-12 max-w-3xl text-center">
+      <span className="mx-auto mb-3 block w-fit rounded-full bg-[#ff2f56]/10 px-4 py-1 text-xs font-bold uppercase tracking-widest text-[#ff2f56]">
+        {eyebrow}
+      </span>
+      <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">{title}</h2>
+      <div className="mx-auto mt-3 h-1 w-20 rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81]" />
+    </Reveal>
+  );
+}
+
+function QuoteBand({ quote, by }) {
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#0b2545] to-[#123a6b] px-6 py-20 text-center md:px-16 md:py-28">
+      <motion.div
+        aria-hidden
+        animate={{ y: [0, -22, 0], x: [0, 14, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute -left-10 top-6 h-56 w-56 rounded-full bg-[#ff2f56]/20 blur-[80px]"
+      />
+      <motion.div
+        aria-hidden
+        animate={{ y: [0, 26, 0], x: [0, -16, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute -right-10 bottom-0 h-64 w-64 rounded-full bg-blue-400/20 blur-[90px]"
+      />
+      <span aria-hidden className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 select-none text-[10rem] font-black leading-none text-white/5">“</span>
+      <div className="relative mx-auto max-w-3xl">
+        <p className="text-2xl font-bold italic leading-snug text-white sm:text-3xl md:text-4xl">
+          <AnimatedWords text={quote} />
+        </p>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mx-auto mt-8 h-1 w-20 origin-center rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81]"
+        />
+        <Reveal delay={0.5}>
+          <p className="mt-4 text-sm font-semibold uppercase tracking-widest text-pink-300">{by}</p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
 // ------------------------------
 // DATA SCHEMA & FLOW PATTERNS
@@ -226,14 +359,26 @@ function CourseSelectionContent() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 py-16 px-4 md:px-8 font-sans relative overflow-hidden">
-      
-      {/* Background Subtle Pastels */}
-      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-100 rounded-full blur-[150px] opacity-50 pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-rose-100 rounded-full blur-[150px] opacity-40 pointer-events-none"></div>
+  const isLanding = currentStep === -1 && !selectedCourse;
 
-      <div className="max-w-5xl mx-auto z-10 relative">
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans relative overflow-hidden">
+
+      {/* Background Subtle Pastels */}
+      <motion.div
+        aria-hidden
+        animate={{ y: [0, 30, 0], x: [0, 20, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-100 rounded-full blur-[150px] opacity-50 pointer-events-none"
+      />
+      <motion.div
+        aria-hidden
+        animate={{ y: [0, -30, 0], x: [0, -20, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[10%] right-[-10%] w-96 h-96 bg-rose-100 rounded-full blur-[150px] opacity-40 pointer-events-none"
+      />
+
+      <div className="max-w-5xl mx-auto z-10 relative py-16 px-4 md:px-8">
 
         {/* Service enquiry from URL params */}
         {serviceParam ? (
@@ -244,9 +389,29 @@ function CourseSelectionContent() {
           />
         ) : (
         <>
-        
+
         {/* Header Section */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 relative">
+          {isLanding && (
+            <>
+              <motion.div
+                aria-hidden
+                animate={{ y: [0, -16, 0], rotate: [0, 10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="pointer-events-none absolute left-[2%] top-6 hidden text-[#ff2f56]/40 md:block"
+              >
+                <FaGraduationCap size={38} />
+              </motion.div>
+              <motion.div
+                aria-hidden
+                animate={{ y: [0, 18, 0], rotate: [0, -12, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="pointer-events-none absolute right-[2%] top-2 hidden text-[#0F4C81]/40 md:block"
+              >
+                <FaGlobe size={38} />
+              </motion.div>
+            </>
+          )}
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -255,6 +420,12 @@ function CourseSelectionContent() {
           >
             {selectedCourse ? selectedCourse.name : "Explore Our World-Class Courses"}
           </motion.h1>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mx-auto mt-4 h-1 w-24 origin-center rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81]"
+          />
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -265,6 +436,31 @@ function CourseSelectionContent() {
               ? "Customize your learning experience step-by-step."
               : "Find the perfect program to accelerate your career or broaden your global horizons."}
           </motion.p>
+
+          {isLanding && (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-3 md:grid-cols-4"
+              >
+                {STATS.map((s) => (
+                  <div key={s.label} className="rounded-2xl border border-slate-200 bg-white/80 px-3 py-4 shadow-sm backdrop-blur">
+                    <p className="text-sm font-extrabold text-[#0F4C81] sm:text-base">{s.value}</p>
+                    <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500">{s.label}</p>
+                  </div>
+                ))}
+              </motion.div>
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity }}
+                className="mt-8 flex justify-center text-[#ff2f56]"
+              >
+                <ChevronDown size={28} />
+              </motion.div>
+            </>
+          )}
         </div>
 
         <AnimatePresence mode="wait">
@@ -281,29 +477,45 @@ function CourseSelectionContent() {
             >
               {CATEGORIES.map((category, catIdx) => (
                 <div key={catIdx} className="space-y-6">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 border-l-4 border-[#0F4C81] pl-4">
-                    {category.title}
-                  </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <Reveal x={-30} y={0}>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 border-l-4 border-[#0F4C81] pl-4">
+                      {category.title}
+                    </h2>
+                  </Reveal>
+                  <motion.div
+                    variants={staggerParent}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-60px" }}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                  >
                     {category.courses.map((course) => (
                       <motion.div
                         key={course.id}
+                        variants={staggerChild}
                         whileHover={{ scale: 1.03, y: -4 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleStartCourse(course)}
                         className="relative group cursor-pointer"
                       >
-                        <div className="relative h-full bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl flex flex-col items-center text-center gap-4 border border-slate-200 hover:border-[#0F4C81] transition-all">
-                          <div className="p-4 bg-blue-50 rounded-xl text-[#0F4C81] transition-colors group-hover:bg-[#0F4C81] group-hover:text-white">
+                        <div className="relative h-full overflow-hidden bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl flex flex-col items-center text-center gap-4 border border-slate-200 hover:border-[#0F4C81] transition-all">
+                          <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] transition-transform duration-500 group-hover:scale-x-100" />
+                          <div className="p-4 bg-blue-50 rounded-xl text-[#0F4C81] transition-all duration-300 group-hover:bg-[#0F4C81] group-hover:text-white group-hover:rotate-6">
                             {course.icon}
                           </div>
                           <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#0F4C81] transition-colors">
                             {course.name}
                           </h3>
+                          {COURSE_TAGLINES[course.id] && (
+                            <p className="text-sm text-slate-500">{COURSE_TAGLINES[course.id]}</p>
+                          )}
+                          <span className="mt-1 inline-flex items-center gap-1 text-xs font-bold text-[#ff2f56] opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                            Start Enquiry <ArrowRight size={14} />
+                          </span>
                         </div>
                       </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
               ))}
             </motion.div>
@@ -507,6 +719,149 @@ function CourseSelectionContent() {
         )}
 
       </div>
+
+      {/* EXTRA SECTIONS (sirf course list wale page par dikhte hain) */}
+      {isLanding && !serviceParam && (
+        <>
+          <QuoteBand quote={QUOTES[0].quote} by={QUOTES[0].by} />
+
+          {/* WHY LEARN WITH US */}
+          <section className="bg-white px-6 py-16 md:px-16 md:py-24">
+            <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
+              <Reveal x={-40} y={0}>
+                <div className="group relative">
+                  <div className="absolute -bottom-4 -right-4 h-full w-full rounded-2xl border-2 border-[#ff2f56]/40 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1" />
+                  <div className="relative overflow-hidden rounded-2xl shadow-xl">
+                    <img
+                      src="/class2.jpeg"
+                      alt="Learning at IIL"
+                      className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+              </Reveal>
+              <Reveal x={40} y={0} delay={0.15}>
+                <span className="inline-block rounded-full bg-[#ff2f56]/10 px-4 py-1 text-xs font-bold uppercase tracking-widest text-[#ff2f56]">
+                  Why Learn With Us
+                </span>
+                <h2 className="mt-4 text-3xl font-extrabold text-[#0b1c3d] sm:text-4xl">
+                  Courses Designed Around You
+                </h2>
+                <div className="mt-3 h-1 w-20 rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81]" />
+                <p className="mt-5 text-slate-600">
+                  Whether you are learning a language, preparing for an international exam or
+                  getting ready for an interview, our trainers guide you at every step with
+                  regular practice, feedback and a supportive classroom.
+                </p>
+                <motion.ul
+                  variants={staggerParent}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className="mt-6 space-y-3"
+                >
+                  {WHY_POINTS.map((p) => (
+                    <motion.li
+                      key={p}
+                      variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0 } }}
+                      className="flex items-center gap-3 text-slate-700"
+                    >
+                      <Star size={16} className="shrink-0 fill-pink-500/20 text-pink-500" />
+                      {p}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* PHOTO STRIP */}
+          <section className="px-6 py-16 md:px-16">
+            <SectionHeading eyebrow="Life At IIL" title="Moments From Our Classes" />
+            <motion.div
+              variants={staggerParent}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+              className="mx-auto grid max-w-5xl grid-cols-2 gap-4 md:grid-cols-3"
+            >
+              {PHOTOS.map((src, i) => (
+                <motion.div
+                  key={src}
+                  variants={staggerChild}
+                  whileHover={{ y: -8 }}
+                  className={`group relative aspect-[4/5] overflow-hidden rounded-2xl bg-slate-200 shadow-lg ${
+                    i === 2 ? "col-span-2 md:col-span-1" : ""
+                  }`}
+                >
+                  <img
+                    src={src}
+                    alt={`Class moment ${i + 1}`}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0f1f]/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                </motion.div>
+              ))}
+            </motion.div>
+          </section>
+
+          {/* HOW IT WORKS */}
+          <section className="bg-white px-6 py-16 md:px-16 md:py-24">
+            <SectionHeading eyebrow="Simple Process" title="How Enrolling Works" />
+            <motion.div
+              variants={staggerParent}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+              className="relative mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {STEPS.map(({ title, desc }, i) => (
+                <motion.div
+                  key={title}
+                  variants={staggerChild}
+                  whileHover={{ y: -8 }}
+                  className="relative rounded-2xl border border-slate-100 bg-white p-6 text-center shadow-sm transition-shadow hover:shadow-xl"
+                >
+                  <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] text-xl font-extrabold text-white shadow-md">
+                    {i + 1}
+                  </span>
+                  <h3 className="font-bold text-[#0b1c3d]">{title}</h3>
+                  <p className="mt-2 text-sm text-slate-600">{desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </section>
+
+          <QuoteBand quote={QUOTES[1].quote} by={QUOTES[1].by} />
+
+          {/* CLOSING CTA */}
+          <section className="px-6 py-16 md:px-16">
+            <Reveal>
+              <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-6 overflow-hidden rounded-3xl bg-gradient-to-r from-[#ff2f56] to-[#0F4C81] px-6 py-14 text-center sm:px-12">
+                <motion.div
+                  aria-hidden
+                  animate={{ scale: [1, 1.25, 1], opacity: [0.15, 0.3, 0.15] }}
+                  transition={{ duration: 5, repeat: Infinity }}
+                  className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-white"
+                />
+                <div className="relative max-w-2xl">
+                  <h2 className="text-2xl font-extrabold text-white sm:text-3xl">Not Sure Which Course To Pick?</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-white/85 sm:text-base">
+                    Talk to our advisors and get guidance on the right program for your goal.
+                  </p>
+                </div>
+                <Link
+                  href="/enquiry"
+                  className="group relative inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-bold text-[#0b1c3d] shadow-lg transition hover:-translate-y-0.5 hover:shadow-2xl"
+                >
+                  Enquire Now
+                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </Reveal>
+          </section>
+        </>
+      )}
     </div>
   );
 }

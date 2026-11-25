@@ -16,6 +16,7 @@ export type Testimonial = {
 
 // Ye sab public Google reviews hain (IIL ke Google Business Profile se).
 // Jin reviews ke end mein "…" hai, wo Google par "More" ke peeche kate hue the.
+// Poora text Google se copy karke yahan paste kar sakti ho.
 export const testimonials: Testimonial[] = [
   {
     name: "Aryan Agrawal",
@@ -120,14 +121,6 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     source: "Google",
     text: "Learn communication, interview, personality development. I had good experience.",
-  },
-  {
-    name: "Ubesh Raza",
-    course: "Japanese Language",
-    category: "Foreign Languages",
-    rating: 5,
-    source: "Google",
-    text: "Japanese language in Moradabad. So I preferred iilstudyabroad is the best foreign language institute in Moradabad for japanese language.",
   },
   {
     name: "Vaibhav Rastogi",

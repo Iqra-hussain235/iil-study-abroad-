@@ -15,11 +15,6 @@ export const COACHING_SERVICES = [
     levels: ["A1", "A2", "B1", "B2", "C1", "C2"],
   },
   {
-    id: "spanish",
-    title: "Spanish",
-    levels: ["A1", "A2", "B1", "B2", "C1", "C2"],
-  },
-  {
     id: "ielts",
     title: "IELTS",
     levels: ["Academic", "General"],
