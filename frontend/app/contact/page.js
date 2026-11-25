@@ -7,10 +7,7 @@ import API from "@/services/api";
 import { SITE } from "@/data/siteInfo";
 import AppointmentSection from "@/components/AppointmentSection";
 
-// One contact form for the whole site.
-// Used on /contact and at the bottom of the home page (showMap = true).
-// The appointment section is shown only on /contact (when showMap is false).
-export default function ContactForm({ showMap = false }) {
+function ContactContent({ showMap = false }) {
   const [data, setData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState({ type: "", text: "" });
   const [loading, setLoading] = useState(false);
@@ -190,6 +187,9 @@ export default function ContactForm({ showMap = false }) {
   );
 }
 
+export default function ContactPage() {
+  return <ContactContent />;
+}
 
 
 
